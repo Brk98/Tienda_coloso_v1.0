@@ -1,0 +1,59 @@
+<?php
+session_start();
+$usuario = $_SESSION['username'];
+
+if(!isset($usuario)){
+	header("location: ../index.php");
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eliminar usuario</title>
+	<link rel="stylesheet" type="text/css" href="../Librerias/main.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+<body>
+	<div class="conteiner">
+
+		<div class="registro">
+			<div class="titulo">
+				Eliminar usuario
+			</div>
+			<table class="formulario">
+			<form action="../Librerias/php/insertar_usuario.php" method="POST" name="form">
+				<tr>
+					<td><input type="text" id="nombre_empleado" name="nombre_em" title="Ingresar nombre" required placeholder="Ingresa ID"></td>
+					<td><input type="submit" value="Buscar" class="myButton">  </td>
+				</tr>
+				<tr>
+					<td><label for="fname">Nombre empleado:</label></td>
+					<td><input type="text" id="nombre_empleado" name="nombre_em" title="Ingresar nombre" disabled></td>
+				</tr>
+				<tr>
+					<td><label for="fname">Telefono:</label></td>
+					<td><input type="tel" id="tel_empleado" name="tel_empleado" disabled></td>
+				</tr>
+				<tr>
+					<td><label for="fname">RFC:</label></td>
+					<td><input type="text" id="RFC_empleado" name="RFC_empleado" disabled></td>
+				</tr>
+				<tr>
+					<td><label for="fname">Direccion:</label></td>
+					<td><input type="address" id="Dir_empleado" name="Dir_empleado" disabled </td>
+				</tr>
+				<tr>
+					<td><label for="fname">Tipo usuario:</label></td>
+						<td><input type="address" id="Dir_empleado" name="tipo_user" disabled </td>
+				</tr>
+				<tr>
+					<td> <input type="submit" value="Cambiar" class="myButton"> </td>
+					<td><a href="usuarios.php" class="myButton">Regresar</a></td>
+				</tr>
+			</table>
+			</form>
+		</div>
+
+	</div>
+</body>
+</html>
