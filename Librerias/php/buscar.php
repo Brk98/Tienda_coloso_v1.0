@@ -24,22 +24,26 @@
     					<td>Nombre</td>
     					<td>Marca</td>
     					<td>Categoria</td>
-    					<td>Precio</td>
-    					<td>Select</td>
+						<td>Precio</td>
+						<td>Cantidad</td>
+    					<td>Selecccion</td>
     				</tr>
 
     			</thead>
     			
 
     	<tbody>";
-
+		$i = 0;
     	while ($fila = $resultado->fetch_assoc()) {
+
     		$salida.="<tr>
     					<td>".$fila['nombre_producto']."</td>
     					<td>".$fila['marca_producto']."</td>
     					<td>".$fila['tipo']."</td>
-    					<td>".$fila['precio_venta']."</td>
-                        <td><input type='checkbox'></td>
+						<td>".$fila['precio_venta']."</td>
+						<input  name='precio[".($i)."]' value='".$fila['precio_venta']."' type='hidden'>
+                        <td><input name='can[".($i)."]' type='number'></td>
+                        <td><input type='checkbox' name='chk[".($i++)."]' value=".$fila['idProducto']."></td>
     				</tr>
                     ";
 

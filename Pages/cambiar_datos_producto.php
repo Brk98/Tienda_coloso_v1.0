@@ -1,5 +1,5 @@
 <?php
-
+include("Checar_producto.php");
 
 
 session_start();
@@ -11,7 +11,6 @@ if(!isset($usuario)){
 include '../Librerias/php/conexions.php';
 
 $id = $_POST['id'];
-echo $id;
 
 $sql = "SELECT *  FROM producto Where idProducto='$id'";
 $result = mysqli_query($conexion,$sql);

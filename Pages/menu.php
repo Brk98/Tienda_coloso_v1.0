@@ -28,7 +28,7 @@ if(!isset($usuario)){
 				</div>
 				<div class="menu2">
 					<button onclick="location.href='usuarios.php'" style="background: url('../Images/usuario.png');width: 150px;height:150px;background-size: 100%;" class="boton_menu"></button>
-					<button style="background: url('../Images/analisis.png');width: 150px;height:150px;background-size: 100%;", class="boton_menu"></button>
+					<button onclick="location.href='reportes.php'" style="background: url('../Images/analisis.png');width: 150px;height:150px;background-size: 100%;", class="boton_menu"></button>
 					<button onclick="location.href='../Librerias/php/salir.php'" style="background: url('../Images/cerrar-sesion.png');width: 150px;height:150px;background-size: 100%;", class="boton_menu"></button>
 				</div>
 			</div>

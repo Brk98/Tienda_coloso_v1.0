@@ -22,8 +22,8 @@ if(!isset($usuario)){
 				<li><a href="almacen.php">Almacén</a>
 				<li><a href="proveedores.php">Proveedores</a></li>
 				<li><a href="usuarios.php">Usuarios</a></li>
-				<li><a href="reportes.html">Reportes</a></li>
-				<li><a href="#">Salir</a></li>
+				<li><a href="reportes.php">Reportes</a></li>
+				<li><a href="../Librerias/php/salir.php">Salir</a></li>
 			</ul>
 	</nav>
 	<div class="container">

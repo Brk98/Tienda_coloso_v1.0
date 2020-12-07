@@ -28,20 +28,6 @@ include '../Librerias/php/conexions.php';
 	</nav> 
 	<div class="container">
 		<h1>Lista de productos</h1>
-		<div>
-			<form action="../Librerias/php/eliminar_producto.php" method="POST">
-			<h2>Eliminar producto</h2>
-			<input type="text" id="id" name="id" title="Ingresar nombre" required placeholder="Ingresa ID a eliminar">
-					<td><input type="submit" value="Eliminar" class="myButton"> 
-			</form>
-	    </div>
-		<div>
-			<form action="cambiar_datos_producto.php" method="POST">
-			<h2>Cambiar datos de productos</h2>
-			<input type="text" id="id" name="id" title="Ingresar nombre" required placeholder="Ingresa ID a modificar">
-					<td><input type="submit" value="Buscar" class="myButton"> 
-			</form>
-	    </div>
 		<table class="ttable">
 			<thead>
 				<tr>
@@ -68,6 +54,8 @@ include '../Librerias/php/conexions.php';
 		    }
 		    ?>
 		</table>
+		<br>
+		<button onclick="location.href='reportes.php'">Regresar</button>
 	</div>
 </body>
 </html>

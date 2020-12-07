@@ -5,12 +5,10 @@ $usuario = $_SESSION['username'];
 if(!isset($usuario)){
 	header("location: ../index.php");
 }
-include '../Librerias/php/conexions.php';
+
 ?>
-<!DOCTYPE html>
-<html>
 <head>
-	<title>Productos</title>
+	<title>Reportes</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="../Librerias/diseño_funciones.css">
 	<meta name="viewport" content="width=device-width, user-scalable=no">
@@ -27,10 +25,11 @@ include '../Librerias/php/conexions.php';
 			</ul>
 	</nav> 
 	<div class="container">
-		<button>Reporte de empleados</button>
-		<button>Reporte de productos</button>
-		<button>Ventas del dia</button>
-		<button>Productos vendidos</button>
+		<button class="myButton" onclick="location.href='reportes_empleados.php'">Reporte de empleados</button>
+		<button class="myButton" onclick="location.href='reportes_productos.php'">Reporte de productos</button>
+		<button class="myButton" onclick="location.href='reportes_ventas.php'">Ventas totales</button>
+		<button class="myButton" onclick="location.href='reportes_productos_vendidos.php'">Productos vendidos</button>
+		<button class="myButton" onclick="location.href='reportes_ventasdia.php'">Ventas por dia</button>
 	</div>
 </body>
 </html>

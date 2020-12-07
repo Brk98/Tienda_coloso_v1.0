@@ -10,7 +10,7 @@ include '../Librerias/php/conexions.php';
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Usuarios</title>
+	<title>Reporte empleados</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="../Librerias/diseño_funciones.css">
 	<meta name="viewport" content="width=device-width, user-scalable=no">
@@ -22,26 +22,12 @@ include '../Librerias/php/conexions.php';
 				<li><a href="almacen.php">Almacén</a>
 				<li><a href="proveedores.php">Proveedores</a></li>
 				<li><a href="usuarios.php">Usuarios</a></li>
-				<li><a href="reportes.php">Reportes</a></li>
+				<li><a href="reportes.html">Reportes</a></li>
 				<li><a href='../Librerias/php/salir.php'">Salir</a></li>
 			</ul>
 	</nav> 
 	<div class="container">
-		<h1>Lista de usuarios</h1>
-		<div>
-			<form action="../Librerias/php/eliminar_empleado.php" method="POST">
-			<h2>Eliminar usuario</h2>
-			<input type="text" id="id" name="id" title="Ingresar nombre" required placeholder="Ingresa ID a eliminar">
-					<td><input type="submit" value="Eliminar" class="myButton"> 
-			</form>
-	    </div>
-		<div>
-			<form action="cambiar_datos_usuario.php" method="POST">
-			<h2>Cambiar datos de usuario</h2>
-			<input type="text" id="id" name="id" title="Ingresar nombre" required placeholder="Ingresa ID a modificar">
-					<td><input type="submit" value="Buscar" class="myButton"> 
-			</form>
-	    </div>
+		<h1>Reporte de usuarios</h1>
 		<table class="ttable">
 			<thead>
 				<tr>
@@ -66,6 +52,8 @@ include '../Librerias/php/conexions.php';
 		    }
 		    ?>
 		</table>
+		<br>
+		<button onclick="location.href='reportes.php'">Regresar</button>
 	</div>
 </body>
 </html>

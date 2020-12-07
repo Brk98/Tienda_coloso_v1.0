@@ -30,7 +30,7 @@ $pcompra = $_POST['precioc'];
 }else
 {
 	echo'<script type="text/javascript">
-    alert("Error no coinciden las contraseñas");
+    alert("Error el producto no se pudo agregar correctamente");
     window.location.href="index.php";
     javascript:history.back(1);
     </script>';
