@@ -1,210 +1,151 @@
--- phpMyAdmin SQL Dump
--- version 4.9.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2019 a las 23:42:26
--- Versión del servidor: 10.4.8-MariaDB
--- Versión de PHP: 7.1.33
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE SCHEMA IF NOT EXISTS `Tienda` DEFAULT CHARACTER SET utf8 ;
+USE `Tienda` ;
+
+-- -----------------------------------------------------
+-- Table `Tienda`.`Producto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Producto` (
+  `idProducto` INT NOT NULL AUTO_INCREMENT,
+  `codigo_producto` VARCHAR(45) NULL,
+  `marca_producto` VARCHAR(45) NULL,
+  `nombre_producto` VARCHAR(45) NULL,
+  `cantidad` INT NULL,
+  `precio` DOUBLE NULL,
+  `tipo` VARCHAR(45) NULL,
+  PRIMARY KEY (`idProducto`));
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- -----------------------------------------------------
+-- Table `Tienda`.`Empleado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Empleado` (
+  `idEmpleado` INT NOT NULL AUTO_INCREMENT,
+  `RFC_empleado` VARCHAR(45) NULL,
+  `nombre_empleado` VARCHAR(45) NULL,
+  `telefono_empleado` VARCHAR(45) NULL,
+  `domicilio_empleado` VARCHAR(100) NULL,
+  `usuario` VARCHAR(45) NULL,
+  `tipo` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  PRIMARY KEY (`idEmpleado`));
 
---
--- Base de datos: `tienda`
---
 
--- --------------------------------------------------------
+-- -----------------------------------------------------
+-- Table `Tienda`.`Proveedor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Proveedor` (
+  `idProveedor` INT NOT NULL AUTO_INCREMENT,
+  `RFC_proveedor` VARCHAR(45) NULL,
+  `nombre_proveedor` VARCHAR(45) NULL,
+  `telefono_proveedor` VARCHAR(45) NULL,
+  `domicilio_proveedor` VARCHAR(45) NULL,
+  `correo_proveedor` VARCHAR(45) NULL,
+  PRIMARY KEY (`idProveedor`));
 
---
--- Estructura de tabla para la tabla `compras_proveedor`
---
 
-CREATE TABLE `compras_proveedor` (
-  `Folio` int(30) NOT NULL,
-  `Cantidad_Articulos` int(30) NOT NULL,
-  `Id_Proveedor` int(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- -----------------------------------------------------
+-- Table `Tienda`.`Cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Cliente` (
+  `idCliente` INT NOT NULL AUTO_INCREMENT,
+  `nombre_cliente` VARCHAR(45) NULL,
+  `telefono_cliente` VARCHAR(45) NULL,
+  PRIMARY KEY (`idCliente`));
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `departamento`
---
+-- -----------------------------------------------------
+-- Table `Tienda`.`Venta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Venta` (
+  `idVenta` INT NOT NULL AUTO_INCREMENT,
+  `IVA` INT NULL DEFAULT '16',
+  `Total` DOUBLE NULL,
+  `Cliente_idCliente` INT NOT NULL,
+  `Empleado_idEmpleado` INT NOT NULL,
+  PRIMARY KEY (`idVenta`, `Cliente_idCliente`, `Empleado_idEmpleado`),
+  INDEX `fk_Venta_Cliente_idx` (`Cliente_idCliente` ASC) VISIBLE,
+  INDEX `fk_Venta_Empleado1_idx` (`Empleado_idEmpleado` ASC) VISIBLE,
+  CONSTRAINT `fk_Venta_Cliente`
+    FOREIGN KEY (`Cliente_idCliente`)
+    REFERENCES `Tienda`.`Cliente` (`idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Venta_Empleado1`
+    FOREIGN KEY (`Empleado_idEmpleado`)
+    REFERENCES `Tienda`.`Empleado` (`idEmpleado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
-CREATE TABLE `departamento` (
-  `Id_Departamento` int(50) NOT NULL,
-  `Nombre_Departamento` varchar(50) NOT NULL,
-  `Id_Producto` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+-- -----------------------------------------------------
+-- Table `Tienda`.`Pedido`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Pedido` (
+  `idPedido` INT NOT NULL AUTO_INCREMENT,
+  `Cantidad` INT NULL,
+  `Proveedor_idProveedor` INT NOT NULL,
+  `Empleado_idEmpleado` INT NOT NULL,
+  `Fecha` DATE NULL,
+  PRIMARY KEY (`idPedido`, `Proveedor_idProveedor`, `Empleado_idEmpleado`),
+  INDEX `fk_Pedido_Proveedor1_idx` (`Proveedor_idProveedor` ASC) VISIBLE,
+  INDEX `fk_Pedido_Empleado1_idx` (`Empleado_idEmpleado` ASC) VISIBLE,
+  CONSTRAINT `fk_Pedido_Proveedor1`
+    FOREIGN KEY (`Proveedor_idProveedor`)
+    REFERENCES `Tienda`.`Proveedor` (`idProveedor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Pedido_Empleado1`
+    FOREIGN KEY (`Empleado_idEmpleado`)
+    REFERENCES `Tienda`.`Empleado` (`idEmpleado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
---
--- Estructura de tabla para la tabla `detalle_compra`
---
 
-CREATE TABLE `detalle_compra` (
-  `Id_Det_Compra` int(50) NOT NULL,
-  `Folio` int(50) NOT NULL,
-  `Descuento` int(50) NOT NULL,
-  `Subtotal` int(50) NOT NULL,
-  `IVA` int(50) NOT NULL,
-  `Total` int(50) NOT NULL,
-  `Id_Proveedor` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- -----------------------------------------------------
+-- Table `Tienda`.`Detalle_Venta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Detalle_Venta` (
+  `Venta_idVenta` INT NOT NULL AUTO_INCREMENT,
+  `Venta_Cliente_idCliente` INT NOT NULL,
+  `Venta_Empleado_idEmpleado` INT NOT NULL,
+  `Producto_idProducto` INT NOT NULL,
+  `cantidad` INT NULL,
+  `precio` DOUBLE NULL,
+  PRIMARY KEY (`Venta_idVenta`, `Venta_Cliente_idCliente`, `Venta_Empleado_idEmpleado`, `Producto_idProducto`),
+  INDEX `fk_Venta_has_Producto_Producto1_idx` (`Producto_idProducto` ASC) VISIBLE,
+  INDEX `fk_Venta_has_Producto_Venta1_idx` (`Venta_idVenta` ASC, `Venta_Cliente_idCliente` ASC, `Venta_Empleado_idEmpleado` ASC) VISIBLE,
+  CONSTRAINT `fk_Venta_has_Producto_Venta1`
+    FOREIGN KEY (`Venta_idVenta` , `Venta_Cliente_idCliente` , `Venta_Empleado_idEmpleado`)
+    REFERENCES `Tienda`.`Venta` (`idVenta` , `Cliente_idCliente` , `Empleado_idEmpleado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Venta_has_Producto_Producto1`
+    FOREIGN KEY (`Producto_idProducto`)
+    REFERENCES `Tienda`.`Producto` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `detalle_venta`
---
+-- -----------------------------------------------------
+-- Table `Tienda`.`Detalle_pedido`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Tienda`.`Detalle_pedido` (
+  `Producto_idProducto` INT NOT NULL AUTO_INCREMENT,
+  `Pedido_idPedido` INT NOT NULL,
+  `cantidad` INT NULL,
+  `precio` DOUBLE NULL,
+  PRIMARY KEY (`Producto_idProducto`, `Pedido_idPedido`),
+  INDEX `fk_Producto_has_Pedido_Pedido1_idx` (`Pedido_idPedido` ASC) VISIBLE,
+  INDEX `fk_Producto_has_Pedido_Producto1_idx` (`Producto_idProducto` ASC) VISIBLE,
+  CONSTRAINT `fk_Producto_has_Pedido_Producto1`
+    FOREIGN KEY (`Producto_idProducto`)
+    REFERENCES `Tienda`.`Producto` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Producto_has_Pedido_Pedido1`
+    FOREIGN KEY (`Pedido_idPedido`)
+    REFERENCES `Tienda`.`Pedido` (`idPedido`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
-CREATE TABLE `detalle_venta` (
-  `Id_Det_Venta` int(50) NOT NULL,
-  `Id_Venta` int(50) NOT NULL,
-  `Id_Producto` int(50) NOT NULL,
-  `Total` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `empleados`
---
-
-CREATE TABLE `empleados` (
-  `Id_Empleado` int(50) NOT NULL,
-  `Nombre` varchar(50) NOT NULL,
-  `Apellidos` varchar(50) NOT NULL,
-  `Telefono` varchar(20) NOT NULL,
-  `Direccion` varchar(50) NOT NULL,
-  `Turno` varchar(50) NOT NULL,
-  `Sueldo` float NOT NULL,
-  `Fecha Contratacion` date NOT NULL,
-  `NSS` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `empleados`
---
-
-INSERT INTO `empleados` (`Id_Empleado`, `Nombre`, `Apellidos`, `Telefono`, `Direccion`, `Turno`, `Sueldo`, `Fecha Contratacion`, `NSS`) VALUES
-(148355, 'Sandra Ivonne', 'Guerrero Davila', '4492604078', 'Parras', 'Vespertino', 4000, '2019-03-04', '1237894568'),
-(234591, 'Bryan Pablo', 'Puerto Coronado', '3461139272', 'Teocaltiche', 'Domingo', 2000, '2019-06-09', '6754129875'),
-(235732, 'Laura Cristina', 'Landeros Contreras', '4251115719', 'Calvillo', 'Matutino', 4000, '2019-04-01', '2143167275'),
-(240708, 'Beatriz Jazmin', 'Romo Miranda', '4492765595', 'Morelos', 'Nocturno', 4000, '2019-11-04', '9876543210');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `producto`
---
-
-CREATE TABLE `producto` (
-  `Id_Producto` int(50) NOT NULL,
-  `Nombre_Producto` varchar(50) NOT NULL,
-  `Descripcion` varchar(50) NOT NULL,
-  `Cantidad` int(50) NOT NULL,
-  `Precio` int(50) NOT NULL,
-  `Marca` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `proveedor`
---
-
-CREATE TABLE `proveedor` (
-  `Id_Proveedor` int(50) NOT NULL,
-  `Nombre_Proveedor` varchar(50) NOT NULL,
-  `Telefono_Proveedor` varchar(50) NOT NULL,
-  `Compañia` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `proveedor`
---
-
-INSERT INTO `proveedor` (`Id_Proveedor`, `Nombre_Proveedor`, `Telefono_Proveedor`, `Compañia`) VALUES
-(125697, 'Zoila Piña del Mar', '2471057755', 'Gamesa'),
-(347898, 'Hugo Sanchez Montes', '4493684680', 'Coca Cola'),
-(985670, 'Hector Pasillas Rangel', '5553668090', 'Sabritas');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `venta`
---
-
-CREATE TABLE `venta` (
-  `Folio_Venta` int(50) NOT NULL,
-  `Id_Producto` int(50) NOT NULL,
-  `Cantidad` int(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `compras_proveedor`
---
-ALTER TABLE `compras_proveedor`
-  ADD PRIMARY KEY (`Folio`);
-
---
--- Indices de la tabla `departamento`
---
-ALTER TABLE `departamento`
-  ADD PRIMARY KEY (`Id_Departamento`);
-
---
--- Indices de la tabla `detalle_compra`
---
-ALTER TABLE `detalle_compra`
-  ADD PRIMARY KEY (`Id_Det_Compra`);
-
---
--- Indices de la tabla `detalle_venta`
---
-ALTER TABLE `detalle_venta`
-  ADD PRIMARY KEY (`Id_Det_Venta`);
-
---
--- Indices de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  ADD PRIMARY KEY (`Id_Empleado`);
-
---
--- Indices de la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD PRIMARY KEY (`Id_Producto`);
-
---
--- Indices de la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  ADD PRIMARY KEY (`Id_Proveedor`);
-
---
--- Indices de la tabla `venta`
---
-ALTER TABLE `venta`
-  ADD PRIMARY KEY (`Folio_Venta`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
