@@ -1,12 +1,4 @@
-<?php
-session_start();
-$usuario = $_SESSION['username'];
 
-if(!isset($usuario)){
-	header("location: ../index.php");
-}
-include '../Librerias/php/conexions.php';
-?>
 <!DOCTYPE html>
 <html>
 <head>

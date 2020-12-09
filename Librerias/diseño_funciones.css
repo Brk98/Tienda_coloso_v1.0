@@ -30,7 +30,7 @@ h2{
 		list-style: none;
 		justify-content: center;
 		color: red !important; 
-	font-size: 3em !important;
+	    font-size: 3em !important;
 		
 	}
 	.menuCSS3 a {
@@ -40,6 +40,8 @@ h2{
 		text-decoration: none;
 		color: #191C26;
 		border-radius: 10px;
+		color: red !important; 
+	    font-size: 3em !important;
 	}
 	.menuCSS3 a:hover {
 		background-color: #CC673B;
@@ -49,6 +51,10 @@ h2{
 	}
 	.menuCSS3 ul li a:hover + ul, .menuCSS3 ul li ul:hover {
 		display: block;
+	}
+	.menuCSS3 ul li a{
+		color: red !important; 
+	    font-size: 3em !important;
 	}
 
 	.container{
