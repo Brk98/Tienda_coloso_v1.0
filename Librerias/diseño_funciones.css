@@ -20,6 +20,10 @@ nav{
 h2{
 	margin: 2px;
 }
+.menuCSS3{
+	color: red !important; 
+	font-size: 3em !important;
+}
 .menuCSS3 ul {
 		display: flex;
 		padding: 0;
